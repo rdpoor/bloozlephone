@@ -1,4 +1,8 @@
 """Stream microphone to the speaker on the fly"""
+
+# On reducing latency:
+# https://wiki.linuxaudio.org/wiki/raspberrypi#on-board_audio
+
 import pyaudio
 import time
 import array
