@@ -17,7 +17,7 @@ BYTES_PER_SAMPLE = 2
 BUFFER_COUNT = 8
 
 SIN_FRQ = 440.0
-SIN_AMP = 1.0
+SIN_AMP = 0.2
 
 class Streamer(object):
 
@@ -78,7 +78,7 @@ class Streamer(object):
 
     def mung_buffer(self, samples):
         for i in range(len(samples)):
-          f = samples[i] / 32768.0            # convert to normalized float
+          f = samples[i] / (32768.0 * 10)       # convert to normalized float/10 (too loud otherwise!)
           f *= math.sin(self.theta)           # multiply by sine wave
           self.theta += self.dtheta
           samples[i] = round(f * 32768)
