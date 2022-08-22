@@ -59,14 +59,16 @@ class Streamer(object):
     def ostream_cb(self, in_data, frame_count, time_info, status):
         # fetch the next buffer of sample data from the FIFO and pass it to the
         # output stream.
-        print("{} O: [{}] {}".format(time.perf_counter_ns(),
-                                     self.o_idx,
-                                     frame_count),
-                                     flush=True)
+        # print("{} O: [{}] {}".format(time.perf_counter_ns(),
+        #                              self.o_idx,
+        #                              frame_count),
+        #                              flush=True)
         data = self.buffers[self.o_idx]
         self.o_idx = (self.o_idx + 1) % BUFFER_COUNT
+        samples = array.array('h', data)      # convert to int16_t
+        # perform any processing on samples here...
         # make a copy of the sample data before sending to the driver
-        return (bytes(data), pyaudio.paContinue)
+        return (bytes(samples), pyaudio.paContinue)
 
     def start(self):
         self.istream.start_stream()
@@ -77,21 +79,21 @@ class Streamer(object):
         self.audio.terminate();
 
 if __name__ == "__main__":
-    s = Streamer(input_device_index=0)
+    s = Streamer(input_device_index=1, output_device_index=1)
     try:
         s.start()        # start the microphone reading stream
         while s.istream.is_active():
             data = s.istream.read(FRAMES_PER_BUFFER)
             # s.buffers[s.i_idx] = bytes(data)  # make a copy
             s.buffers[s.i_idx] = data
-            print("{} I: [{}] {}".format(time.perf_counter_ns(),
-                                         s.i_idx,
-                                         FRAMES_PER_BUFFER),
-                                         flush=True)
+            # print("{} I: [{}] {}".format(time.perf_counter_ns(),
+            #                              s.i_idx,
+            #                              FRAMES_PER_BUFFER),
+            #                              flush=True)
             s.i_idx = (s.i_idx + 1) % BUFFER_COUNT
             # If the input stream has filled some elements of the FIFO, it is
             # time to start the output stream.
-            if (s.ostream.is_active() == False) and (s.i_idx == 4):
+            if (s.ostream.is_active() == False) and (s.i_idx == 3):
                 print("starting output stream", flush=True)
                 s.ostream.start_stream()
 
