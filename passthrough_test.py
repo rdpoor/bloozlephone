@@ -9,12 +9,11 @@ import array
 import math
 
 SAMPLE_FORMAT = pyaudio.paInt16  # samples are 16 bit signed
-CHANNEL_COUNT = 1                # number of channels
 FRAME_RATE = 48000               # samples per second
 
 # FRAMES_PER_BUFFER = 256
 FRAMES_PER_BUFFER = 128
-SAMPLES_PER_FRAME = 1
+SAMPLES_PER_FRAME = 2
 BYTES_PER_SAMPLE = 2
 BUFFER_COUNT = 8
 
@@ -38,7 +37,7 @@ class Streamer(object):
 
         self.istream = self.audio.open(
             format=SAMPLE_FORMAT,
-            channels=CHANNEL_COUNT,
+            channels=SAMPLES_PER_FRAME,
             rate=FRAME_RATE,
             input=True,
             start=False,  # wait for self.start()
@@ -47,7 +46,7 @@ class Streamer(object):
         )
         self.ostream = self.audio.open(
             format=SAMPLE_FORMAT,
-            channels=CHANNEL_COUNT,
+            channels=SAMPLES_PER_FRAME,
             rate=FRAME_RATE,
             output=True,
             start=False,  # wait until we have acquired mic buffer(s)
