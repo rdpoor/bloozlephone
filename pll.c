@@ -1,10 +1,10 @@
-/** @file biquad.c
-    @brief Implementation of a biquad filter
+/** @file pll.c
+    @brief Implementation of a pll
     @author R.D.Poor  rdpoor@gmail.com
 */
 
 
-#include "biquad.h"
+#include "pll.h"
 #include <math.h>
 #include <stddef.h>
 
@@ -20,9 +20,36 @@
 
 // =============================================================================
 
+pll_t *pll_init(pll_t *pll, SAMPLE_T alpha; SAMPLE_T beta) {
+    pll->alpha = alpha;
+    pll->beta = beta;
+    pll->phase_out = 0.0;
+    pll->frequency_out = 0.0;
+    return pll;
+}
+
+SAMPLE_T pll_step(pll_t *pll, SAMPLE_T sample) {
+    float complex signal_out = cexpf(_Complex_I * pll->phase_out);
+    float phase_error = cargf( sample * conjf(signal_out) );
+
+    // apply loop filter and correct output phase and frequency
+    pll->phase_out += pll->alpha * phase_error;    // adjust phase
+    pll->frequency_out +=  pll->beta * phase_error;    // adjust frequency
+
+    // increment input and output phase values
+    phase_in  += frequency_in;
+    phase_out += frequency_out;
+
+    // adjust frequency and phase
+    pll->phase_out += alpha * phase_error;
+    pll->frequency_out += beta * phase_error;
+
+    return crealf(signal_out);
+}
+
 /* initialize a BiQuad Filter */
-biquad_t *biquad_init(biquad_t *b,
-                      biquad_type_t type,
+pll_t *pll_init(pll_t *b,
+                      pll_type_t type,
                       SAMPLE_T dbGain,
                       SAMPLE_T freq,
                       SAMPLE_T srate,
@@ -122,7 +149,7 @@ biquad_t *biquad_init(biquad_t *b,
 }
 
 /* Computes a BiQuad filter on a sample */
-SAMPLE_T biquad_step(biquad_t *b, SAMPLE_T sample) {
+SAMPLE_T pll_step(pll_t *b, SAMPLE_T sample) {
   SAMPLE_T result;
 
   /* compute result */

@@ -14,7 +14,7 @@ to pure C level, for which I should use PortAudio (c.f.).
 ## PortAudio
 http://www.portaudio.com/docs/v19-doxydocs/compile_linux.html
 
-Pitch detection:
+## Pitch detection:
 
 Yin: http://mroy.chez-alice.fr/yin/index.html
 http://recherche.ircam.fr/equipes/pcm/cheveign/pss/2002_JASA_YIN.pdf
@@ -28,3 +28,13 @@ interface.khm.de/index.php/lab/experiments/arduino-frequency-counter-library/
 
 Brute force Autocorrelation with peak detection:
 https://www.instructables.com/Reliable-Frequency-Detection-Using-DSP-Techniques/
+
+SuperCollieder:
+https://github.com/supercollider/supercollider/blob/main/server/plugins/FilterUGens.cpp
+
+## MusicDSP
+
+https://www.musicdsp.org/en/latest/Synthesis/16-allmost-ready-to-use-oscillators.html
+
+## PLL
+https://liquidsdr.org/blog/pll-simple-howto/
