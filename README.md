@@ -11,6 +11,9 @@ to pure C level, for which I should use PortAudio (c.f.).
 
 ## Threads to follow
 
+## YIN
+https://github.com/ashokfernandez/Yin-Pitch-Tracking
+
 ## PortAudio
 http://www.portaudio.com/docs/v19-doxydocs/compile_linux.html
 

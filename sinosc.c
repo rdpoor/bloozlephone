@@ -26,6 +26,16 @@ sinosc_t *sinosc_init(sinosc_t *s, SAMPLE_T srate) {
 SAMPLE_T sinosc_step(sinosc_t *s, SAMPLE_T frequency_hz, SAMPLE_T amplitude) {
     s->prev = amplitude * sin(s->theta);
     s->theta += frequency_hz * s->omega;
+    // keep -2PI < theta < 2PI
+    if (s->theta >= 2 * M_PI) {
+        s->theta -= 2 * M_PI;
+    } else if (s->theta <= 2 * M_PI) {
+        s->theta += 2 * M_PI;
+    } else if (s->theta != s->theta) {
+        // if frequency_hz is even once NaN, then theta will be NaN.  This will
+        // prevent it from staying NaN.
+        s->theta = 0.0;
+    }
     return s->prev;
 }
 

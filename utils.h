@@ -5,19 +5,24 @@
 #define SAMPLE_T float
 #endif
 
-// pow(10, dbGain / 40);
+/**
+ * @brief convert (power) db to ratio: 10 db => 10x gain
+ */
 SAMPLE_T utils_db_to_gain(SAMPLE_T db);
 
+/**
+ * @brief convert ratio to (power) db: 10x gain => 10 db
+ */
 SAMPLE_T utils_gain_to_db(SAMPLE_T gain);
 
 /**
- * @brief convert midi-style pitch to frequency
- * MIDI pitch 69 = 440Hz.
- * semitones = pitch - 69
- * return 440 * pow(2, semitones / 12)
+ * @brief convert midi-style pitch to frequency: pitch 69 => 440Hz
  */
 SAMPLE_T utils_pitch_to_hz(SAMPLE_T midi_pitch);
 
+/**
+ * @brief convert frequency to midi-style pitch: 440Hz => pitch 69
+ */
 SAMPLE_T utils_hz_to_pitch(SAMPLE_T hz);
 
 /**

@@ -7,9 +7,9 @@
 
 typedef struct {
     SAMPLE_T amplitude;
-    SAMPLE_T srate;
-    SAMPLE_T omega;
-    SAMPLE_T prev;
+    SAMPLE_T theta;   // updated at every sample
+    SAMPLE_T omega;   // 2.0 * M_PI / srate
+    SAMPLE_T prev;    // previously computed sample
 } sinosc_t;
 
 sinosc_t *sinosc_init(sinosc_t *s, SAMPLE_T srate);
